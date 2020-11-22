@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
+</head>
+<body>
+    <div class="container">
+    <h3 class="display-3">Equipos</h3>
+    <form action="">
+        <input type="text"  placeholder="Equipo"  name="titulo" id="titulo">
+        <input type="number"placeholder="Cliente" name="año"    id="año">
+        <input type="text"  placeholder="Falla"   name="genero" id="genero">
+        <input type="text"  placeholder="Estado"  name="edo" id="idedo" list="edo" class="select" style="cursor: pointer">
+        <datalist id="edo">
+            <option value="Sin iniciar">
+            <option value="En proceso">
+            <option value="Terminado">
+        </datalist>
+        <input type="number"placeholder="Precio"  name="precio" id="precio">
+        <input type="date"  placeholder="Entrada" name="entrada"id="entrada">
+        <button id="act" type="button"> Agregar </button>
+    </form>
+<br>
+<div class="clear"></div>
+    <div>
+        <h4> Equipos </h4>
+        <ul id="lista-peliculas" class="list-group">
+
+        </ul>
+    </div>
+
+</div>
+</body>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Editar Equipo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="text"  id="tituloEdit" name="tituloEdit"    placeholder="Equipo">
+            <input type="number"id="añoEdit"    name="añoEdit"       placeholder="Cliente">
+            <input type="text"  id="generoEdit" name="generoEdit"    placeholder="Falla">
+            <input type="text"  placeholder="Estado"  name="edo" id="idedo" list="edo" class="select" style="cursor: pointer">
+            <datalist id="edo">
+                <option value="Sin iniciar">
+                <option value="En proceso">
+                <option value="Terminado">
+            </datalist>
+            <input type="number"id="precioEdit" name="precioEdit"    placeholder="Precio">
+            <input type="date"  id="entradaEdit"name="entradaEdit"   placeholder="Entrada">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="SaveEdit">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+    $(document).ready( function(){
+        getPelicula();
+        $("#act").on("click", function(event){
+            console.log(event);
+            var Pelicula = { };
+            Pelicula.titulo = $("#titulo").val();
+            Pelicula.año = $("#año").val();
+            Pelicula.genero = $("#genero").val();
+            Pelicula.edo = $("#idedo").val();
+            Pelicula.precio = $("#precio").val();
+            Pelicula.entrada = $("#entrada").val();
+            
+            sendPOSTRequest(Pelicula);
+            const input = document.getElementById("idedo");
+            input.value = "";
+            document.getElementById('titulo').value = '';
+            document.getElementById('año').value = '';
+            document.getElementById('genero').value = '';
+            document.getElementById('idedo').value = '';
+            document.getElementById('precio').value = '';
+            document.getElementById('entrada').value = '';
+        });
+
+        $('#editModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var titulo = button.data('titulo');
+            var año = button.data('año');
+            var genero = button.data('genero');
+            var estado = button.data('estado');
+            var precio = button.data('precio');
+            var entrada = button.data('entrada');
+            var modal = $(this);
+            modal.find('.modal-title').text('Edicion Equipo');
+            modal.find('.modal-body input#tituloEdit').val(titulo);
+            modal.find('.modal-body input#añoEdit').val(año);
+            modal.find('.modal-body input#generoEdit').val(genero);
+            modal.find('.modal-body input#edoEdit').val(estado);
+            modal.find('.modal-body input#precioEdit').val(precio);
+            modal.find('.modal-body input#entradaEdit').val(entrada);
+            modal.find('.modal-footer button#SaveEdit').unbind().on('click', (event)=>{
+                console.log("Guardando Pelicula: " + año);
+                var tituloNew =  modal.find('.modal-body input#tituloEdit').val();
+                var añoNew =  modal.find('.modal-body input#añoEdit').val();
+                var generoNew =  modal.find('.modal-body input#generoEdit').val();
+                var estadoNew =  modal.find('.modal-body input#edoEdit').val();
+                var precioNew =  modal.find('.modal-body input#precioEdit').val();
+                var entradaNew =  modal.find('.modal-body input#entradaEdit').val();
+                var Pelicula = {'tituloOld' : año, 'tituloNew' : tituloNew , 'añoNew' : añoNew , 'generoNew' : generoNew,     'estadoNew' : estadoNew , 'precioNew' : precioNew , 'entradaNew' : entradaNew };
+                console.log(Pelicula);
+                sendPUTRequest(Pelicula);
+                modal.modal('hide');
+                
+            });
+        });
+
+    });
+
+    function getPelicula(){
+        $.get("http://localhost:3000/peliculas", function(data){
+            var listHTML = "";
+            console.log(data);
+            data.forEach(Pelicula => {
+                if(Pelicula.edo=="Sin iniciar")
+                {
+                    listHTML += "<li class='list-group-item' style='background-color: red'>" + 
+                    " <button type='button' class='delete btn btn-danger btn-sm' data-año='"+ Pelicula.año +"'> <i class='material-icons'>delete</i> </button> " + 
+                    " <button type='button' class='edit btn btn-warning btn-sm' data-titulo='"+ Pelicula.titulo +"' data-año='"+Pelicula.año+"' data-genero='"+Pelicula.genero+"' data-estado='"+Pelicula.edo+"' data-precio='"+Pelicula.precio+"' data-entrada='"+Pelicula.entrada+"' data-toggle='modal' data-target='#editModal'> <i class='material-icons'>create</i> </button> " +
+                    " | Equipo : " + Pelicula.titulo + " | Cliente: " + Pelicula.año + " | Falla: " + Pelicula.genero +  " | Estado: " + Pelicula.edo +  " | Precio: " + + Pelicula.precio +  " | Fecha de entrada: " + Pelicula.entrada +" </li>";
+                }
+                if(Pelicula.edo=="En proceso")
+                {
+                    listHTML += "<li class='list-group-item' style='background-color: orange'>" + 
+                    " <button type='button' class='delete btn btn-danger btn-sm' data-año='"+ Pelicula.año +"'> <i class='material-icons'>delete</i> </button> " + 
+                    " <button type='button' class='edit btn btn-warning btn-sm' data-titulo='"+ Pelicula.titulo +"' data-año='"+Pelicula.año+"' data-genero='"+Pelicula.genero+"' data-estado='"+Pelicula.edo+"' data-precio='"+Pelicula.precio+"' data-entrada='"+Pelicula.entrada+"' data-toggle='modal' data-target='#editModal'> <i class='material-icons'>create</i> </button> " +
+                    " | Equipo : " + Pelicula.titulo + " | Cliente: " + Pelicula.año + " | Falla: " + Pelicula.genero +  " | Estado: " + Pelicula.edo +  " | Precio: " + + Pelicula.precio +  " | Fecha de entrada: " + Pelicula.entrada +" </li>";
+                }
+                if(Pelicula.edo=="Terminado")
+                {
+                    listHTML += "<li class='list-group-item' style='background-color: green'>" + 
+                    " <button type='button' class='delete btn btn-danger btn-sm' data-año='"+ Pelicula.año +"'> <i class='material-icons'>delete</i> </button> " + 
+                    " <button type='button' class='edit btn btn-warning btn-sm' data-titulo='"+ Pelicula.titulo +"' data-año='"+Pelicula.año+"' data-genero='"+Pelicula.genero+"' data-estado='"+Pelicula.edo+"' data-precio='"+Pelicula.precio+"' data-entrada='"+Pelicula.entrada+"' data-toggle='modal' data-target='#editModal'> <i class='material-icons'>create</i> </button> " +
+                    " | Equipo : " + Pelicula.titulo + " | Cliente: " + Pelicula.año + " | Falla: " + Pelicula.genero +  " | Estado: " + Pelicula.edo +  " | Precio: " + + Pelicula.precio +  " | Fecha de entrada: " + Pelicula.entrada +" </li>";
+                }
+            });
+            $("#lista-peliculas").html(listHTML);
+            $(".delete").on("click", (event) =>{
+                console.log("Button delete");
+                console.log(event.target);
+                sendDELETERequest({ "clave" : event.target.dataset["clave"] });
+            });
+        });
+    }
+
+    function sendPOSTRequest(body_object){
+        $.post("http://localhost:3000/peliculas", body_object , 
+        function(){
+            location.reload();
+            getPelicula();
+        });
+    }
+
+    function sendDELETERequest(body_object) {
+        $.ajax({
+            method: "DELETE",
+            url: "http://localhost:3000/peliculas",
+            data: body_object
+            })
+            .done(function( msg ) {
+                console.log( "Pelicula eliminada: " + body_object.clave );
+                location.reload();
+            })
+            .fail(function(msg){
+            }); 
+            getPelicula();
+    }
+
+    function sendPUTRequest(body_object){
+
+        $.ajax({
+            method: "PUT",
+            url: "http://localhost:3000/peliculas",
+            data: body_object
+            })
+            .done(function( msg ) {
+                location.reload();
+            })
+            .fail(function(msg){
+            }); 
+            getPelicula();
+    }
+
+</script>
+</html>
