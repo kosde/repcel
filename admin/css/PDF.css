@@ -1,0 +1,42 @@
+@font-face{
+font-family: "Gotham-Bold";
+src: url("css/Gotham-Bold.ttf");
+}
+@font-face{
+font-family: "Gotham-Light";
+src: url("css/Gotham-Light.ttf");
+}
+@font-face{
+font-family: "Gotham-Medium";
+src: url("css/Gotham-Medium.ttf");
+}
+.font-light{
+font-family: "Gotham-Light" !important;
+}
+.font-medium{
+font-family: "Gotham-Medium" !important;
+font-weight: 100 !important;
+}
+.font-bold{
+font-family: "Gotham-Bold" !important;
+font-weight: 100 !important;
+}
+.logo{
+    width: 40%;
+    float:left;
+    display: inline;
+}
+.encabezado{
+    float:right;
+    width:40%;
+}
+.acmestickers{
+    padding-bottom: 50px;
+}
+.arriba{
+    padding-bottom: 50px;
+    display: inline;
+}
+.imglogo{
+    display: inline;
+}

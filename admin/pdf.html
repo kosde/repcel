@@ -1,0 +1,228 @@
+<!--<?php
+session_start();
+$datezone=date_default_timezone_get();
+?> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/repcel/logo.png"> 
+
+	<link rel="canonical" href="https://demo.adminkit.io/ui-general.html"/>
+	<title>Repcel</title>
+
+	<link href="css/app.css?v=1.0" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="col-md-12" style="border: 2px solid black;padding: 50px;">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="img/repcel/logoN.png" alt="" style="width: 200px;">
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+                <h3>Orden de reparación</h3>
+                <h1>REPCEL</h1>
+                <p>Cordillera de los Alpes 713-1B, Loma Verde, CP. 78215 <br> San Luis Potosí, S.L.P. Telefono (444) 2 82 94 22</p>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Fecha de ingreso: .'$date('l jS \of F Y h:i:s A');''.</h4>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+            <div class="col-md-4">
+                <h4>Recepcionado por: .'$_SESSION['Nombre'];'.</h4>
+                <br>
+                <br>
+                <div>
+                    <h4 style="display: inline-block;padding-right: 40px;">No. de Orden</h4>
+                    <div style="border: 3px solid red;width: 120px;border-style: dashed solid;display: inline-block;">
+                        <h4 style="color: firebrick;padding: 5px 0px 0px 0px;text-align: center;">1234</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 50px;">
+            <div class="col-md-4">
+                <h2>Datos del Cliente</h2>
+                <h4>Nombre cliente: </h4>
+                <h4>Telefono: </h4>
+                <h4>Correo electronico:</h4>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+            <div class="col-md-4">
+               
+            </div>
+        </div>
+        <br><br><br>
+        <div class="row">
+            <h2 style="text-align: center;">Información del equipo</h2>
+            <div class="mb-3 col-md-4">
+                
+                <h4>Tipo de equipo: </h4>
+                <br>
+                <h4>Marca: </h4>
+                <br>
+                <h4>Modelo: </h4>
+                <br>
+                <h4>N/S o IMEI: </h4>
+                <br>
+                <h4>Condiciones de ingreso del Equipo:</h4>
+                <br>
+                <h4>Contraseña:</h4>
+                <br>
+               
+                
+            </div>
+            <div class="mb-3 col-md-8">
+                <label class="form-label" for="inputState">Detalles de recepción del equipo (Marca las opciones de los componentes funcionales)</label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_1">
+                            <span class="form-check-label">
+                                Display
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_2">
+                            <span class="form-check-label">
+                                Touch
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_3">
+                            <span class="form-check-label">
+                                Face ID/ Touch ID
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_4">
+                            <span class="form-check-label">
+                                Carga
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_5">
+                            <span class="form-check-label">
+                                Bocina auricular
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_6">
+                            <span class="form-check-label">
+                                Bocina altavoz
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_7">
+                            <span class="form-check-label">
+                                Wifi
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_8">
+                            <span class="form-check-label">
+                                Bluetooth
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_9">
+                            <span class="form-check-label">
+                                Cámara frontal
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_10">
+                            <span class="form-check-label">
+                                Camara trasera
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_11">
+                            <span class="form-check-label">
+                                Señal
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_12">
+                            <span class="form-check-label">
+                                Botón de bloqueo
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_13">
+                            <span class="form-check-label">
+                                Botones de volumen
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_14">
+                            <span class="form-check-label">
+                                Tornillos
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_15">
+                            <span class="form-check-label">
+                                Flash
+                            </span>
+                        </label>
+                        <label class="form-check form-check-inline" style="width: 100%;">
+                            <input class="form-check-input" type="checkbox" id="id_op_16">
+                            <span class="form-check-label">
+                                Sensor de proximidad
+                            </span>
+                        </label>
+                    </div>
+                </div>                                                    
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div style="width: 300px;height: 300px;border: 2px solid black;display: inline-block;">
+                        <div class="row" style="height: 100px;">
+                            <div style="width:24px !important;height:24px !important;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius: 50%;background: black;margin: auto;"></div>
+                            <div style="width:24px !important;height:24px !important;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius: 50%;background: black;margin: auto;"></div>
+                            <div style="width:24px !important;height:24px !important;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius: 50%;background: black;margin: auto;"></div>
+                        </div>
+                        <div class="row" style="height: 100px;">
+                            <div style="width:24px !important;height:24px !important;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius: 50%;background: black;margin: auto;"></div>
+                            <div style="width:24px !important;height:24px !important;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius: 50%;background: black;margin: auto;"></div>
+                            <div style="width:24px !important;height:24px !important;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius: 50%;background: black;margin: auto;"></div>
+                        </div>
+                        <div class="row" style="height: 100px;">
+                            <div style="width:24px !important;height:24px !important;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius: 50%;background: black;margin: auto;"></div>
+                            <div style="width:24px !important;height:24px !important;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius: 50%;background: black;margin: auto;"></div>
+                            <div style="width:24px !important;height:24px !important;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius: 50%;background: black;margin: auto;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img src="img/repcel/schematic.png" alt="" style="width: 340px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
